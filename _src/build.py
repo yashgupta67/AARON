@@ -144,8 +144,8 @@ def page(fname, title, desc, body):
         f.write(html)
 
 
-def hero(crumb, h1, lead, stage, stage_cls="", cta=True):
-    c = f'<div class="hero-cta rv" data-delay=".5"><a class="btn btn-red" href="about.html#contact">Talk to an expert {ARROW}</a><a class="btn btn-ghost" href="#more">Explore below</a></div>' if cta else ''
+def hero(crumb, h1, lead, stage, stage_cls="", cta=True, cta_html=None):
+    c = cta_html if cta_html else f'<div class="hero-cta rv" data-delay=".5"><a class="btn btn-red" href="about.html#contact">Talk to an expert {ARROW}</a><a class="btn btn-ghost" href="#more">Explore below</a></div>' if cta else ''
     return f'''<section class="hero"><div class="wrap hero-grid"><div>
 <div class="crumbs rv">{crumb}</div><h1 data-split>{h1}</h1><p class="lead rv" data-delay=".35">{lead}</p>{c}</div>
 <div class="stage {stage_cls} rv" data-delay=".25">{stage}</div></div></section>'''
@@ -609,9 +609,12 @@ ARTICLES = [
 
 
 def build_blog():
-    stage = resources_stage('blog.html')
+    stage = photo_stage("meeting-table", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX")
+    signup = f'''<div class="hero-signup rv" data-delay=".5"><span class="hs-label">Get the monthly newsletter</span>
+<form data-demo onsubmit="return false"><div class="news"><input type="email" required placeholder="you@company.com" aria-label="Email address"><button class="btn btn-red" type="submit">Subscribe {ARROW}</button></div></form>
+<div class="ok">Thanks, you are on the list.</div><p class="hs-note">One useful email a month. Free, and you can unsubscribe any time. <a href="#more">Or browse the articles below ↓</a></p></div>'''
     b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Blogs & Newsletter', 'Latest <span class="r">thinking.</span>',
-             "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage)
+             "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage, "photo", cta_html=signup)
     f = POSTS[0]
     feat = f'<a class="feature rv" href="{ARTICLES[0][0]}.html"><div class="art ph">{photo(f[4])}</div><div class="fb2"><span class="kicker">{f[1]} · Featured</span><h3>{f[2]}</h3><p>{f[3]} Read it before you invest in a single model.</p><span class="more" style="margin-top:24px">Read article {ARROW}</span></div></a>'
     cards = ''.join(f'<a class="post" href="{ARTICLES[i+1][0]}.html" data-cat="{c}"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for i, (c, t, ti, de, ph, rt) in enumerate(POSTS[1:]))

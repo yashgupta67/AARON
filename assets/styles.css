@@ -513,3 +513,12 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
 .stage svg a.rrow{cursor:pointer}.stage svg a.rrow .rowbg{transition:fill .25s,stroke .25s}.stage svg a.rrow:hover .rowbg{fill:rgba(255,255,255,.16);stroke:rgba(255,255,255,.5)}
 
 section[id],div[id]{scroll-margin-top:100px}
+
+/* blog hero signup */
+.hero-signup{margin-top:34px;padding:22px 24px 20px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--glass-b);max-width:520px;border-left:3px solid var(--red)}
+.hero-signup .hs-label{display:block;font:800 .74rem var(--fd);letter-spacing:.16em;text-transform:uppercase;color:#ff8b95;margin-bottom:12px}
+.hero-signup .news{max-width:none;background:rgba(255,255,255,.1)}
+.hero-signup .hs-note{font-size:.82rem;color:#9fb3e0;margin-top:12px;max-width:none}
+.hero-signup .hs-note a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.hero-signup .ok{margin-top:12px;background:rgba(74,222,128,.14);color:#b7f5cf}
+@media(max-width:640px){.hero-signup{padding:18px}.hero-signup .news .btn{justify-content:center}}
