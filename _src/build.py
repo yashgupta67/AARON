@@ -80,6 +80,8 @@ for sec, m in MENUS.items():
     for g, items in m["groups"]:
         for h, *_ in items:
             SECTION.setdefault(h, sec)
+for _a in ["ai-readiness","erp-over-budget","ai-triage-human-touch","connecting-customer-data","erp-demo-truth","itsm-migration","pilot-to-production","cx-beyond-nps"]:
+    SECTION[_a + ".html"] = "resources.html"
 SECTION["careers.html"] = "resources.html"  # careers lives under Resources; also reachable from Industry > Consultants > Join Us
 
 
@@ -176,13 +178,18 @@ def tile(href, k, title, desc, art_html):
 
 
 def resources_stage(active=None):
-    items = [("blog.html", "article", "#2563d8", "Blogs & Newsletter", "Insights on AI, ERP, ITSM and CX, plus a monthly briefing", "8 articles"),
-             ("events.html", "webinar", "#d4202f", "Events & Webinars", "Live sessions, roundtables and on-demand recordings", "6 sessions"),
-             ("careers.html", "career", "#1a9a5b", "Careers", "Open roles and how we hire", "6 open roles")]
+    if active == "blog.html":
+        items = [("#more", "article", "#2563d8", "Blog articles", "Latest thinking on AI, ERP, ITSM and CX", "8 articles"),
+                 ("#newsletter", "mail", "#7a4bd8", "Monthly newsletter", "One useful email, once a month", "Free"),
+                 ("events.html", "webinar", "#d4202f", "Events & Webinars", "Live sessions and on-demand recordings", "6 sessions"),
+                 ("careers.html", "career", "#1a9a5b", "Careers", "Open roles and how we hire", "6 open roles")]
+    else:
+        items = [("blog.html", "article", "#2563d8", "Blogs & Newsletter", "Insights on AI, ERP, ITSM and CX, plus a monthly briefing", "8 articles"),
+                 ("events.html", "webinar", "#d4202f", "Events & Webinars", "Live sessions, roundtables and on-demand recordings", "6 sessions"),
+                 ("careers.html", "career", "#1a9a5b", "Careers", "Open roles and how we hire", "6 open roles")]
     out = ''
     for href, ic, c, t, d, n in items:
-        cur = " current" if href == active else ""
-        out += f'''<a class="rlink{cur}" href="{href}"><span class="ri" style="background:{c}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{V.ICON_PATHS[ic]}</svg></span>
+        out += f'''<a class="rlink" href="{href}"><span class="ri" style="background:{c}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{V.ICON_PATHS[ic]}</svg></span>
 <span class="rt"><b>{t}</b><span>{d}</span></span><span class="rn">{n}</span><span class="rg">{ARROW}</span></a>'''
     return f'<div class="rstack">{out}</div>'
 
@@ -533,7 +540,7 @@ def build_consultants():
     b = hero('<a href="index.html">Home</a> / <a href="industry.html">Industry Expertise</a> / Consultants', 'The people you <span class="r">will work with.</span>',
              "Practitioners with decades of enterprise delivery behind them, supported by a network of specialist partners.", stage, "photo")
     b += '<section id="more" class="paper"><div class="wrap">' + sh("Our consultants", "Meet the team.", "Profiles of the practitioners who lead our engagements.") + \
-         '<div class="people" data-stagger>' + ''.join(f'<article class="person"><div class="ph"><span class="yrs">{y}</span><a class="in" href="#" aria-label="LinkedIn">{LI}</a>{V.AVATAR}</div><div class="pi"><h3>{n}</h3><div class="role">{r}</div><p>{bio}</p><div class="chips">{"".join(f"<span>{c}</span>" for c in ch)}</div><div class="loc">{loc}</div></div></article>' for n, r, y, bio, ch, loc in PEOPLE) + '</div></div></section>'
+         '<div class="people" data-stagger>' + ''.join(f'<article class="person"><div class="ph"><span class="yrs">{y}</span>{V.AVATAR}</div><div class="pi"><h3>{n}</h3><div class="role">{r}</div><p>{bio}</p><div class="chips">{"".join(f"<span>{c}</span>" for c in ch)}</div><div class="loc">{loc}</div></div></article>' for n, r, y, bio, ch, loc in PEOPLE) + '</div></div></section>'
     pl = [("ServiceNow", "ITSM · Workflow"), ("SAP", "ERP · BTP"), ("Microsoft", "Azure · Dynamics"), ("Oracle", "ERP · Cloud"), ("Atlassian", "Jira Service Mgmt"), ("Salesforce", "CRM · CX"), ("AWS", "Cloud · AI"), ("Google Cloud", "Data · AI")]
     b += '<section><div class="wrap">' + sh("Our partners", "Strong platforms. Stronger together.", "Certified expertise across the ecosystems our clients already run on.") + \
          '<div class="plogos" data-stagger>' + ''.join(f'<div class="plogo">{n}<small>{s}</small></div>' for n, s in pl) + '</div></div></section>'
@@ -552,20 +559,82 @@ POSTS = [
     ("cx", "CX", "Measuring experience beyond NPS", "Signals that actually predict loyalty and what to do with them.", "highfive", "5 min read"),
 ]
 
+ARTICLES = [
+    ("ai-readiness", "Most AI programs stall not on the model but on everything around it. Before you fund a pilot, test your readiness across four areas.",
+     [("Data access", "Can the right people reach clean, governed data for your top use cases? If not, fix that first."),
+      ("Use-case selection", "Rank ideas by value and feasibility, and start with one whose outcome you can measure within a quarter."),
+      ("Skills and ownership", "Name a business owner for every use case, not just a technical lead."),
+      ("Governance", "Decide up front how you will handle security, privacy, bias and human review.")]),
+    ("erp-over-budget", "ERP overruns are rarely a surprise in hindsight. These five causes show up again and again, usually early enough to act on.",
+     [("Unclear requirements", "Teams discover what they need halfway through configuration, when change is most expensive."),
+      ("Underestimated data migration", "Cleaning and mapping legacy data takes longer than any plan assumes."),
+      ("Customization creep", "Every bespoke change adds cost now and upgrade pain later."),
+      ("Weak change management", "A system nobody adopts delivers none of the promised value."),
+      ("No independent oversight", "Vendor timelines tend to be optimistic. Someone on your side needs to challenge them.")]),
+    ("ai-triage-human-touch", "AI can route and categorize tickets faster than any team. The question is where it should stop and a person should start.",
+     [("Start with categorization and routing", "These are low-risk, high-volume tasks where AI helps most."),
+      ("Keep people on high-impact incidents", "Major outages and sensitive requests deserve human judgment."),
+      ("Measure resolution quality", "Speed alone can hide wrong answers. Track reopen rates and satisfaction too."),
+      ("Let agents correct the model", "Make feedback easy so the system improves from real corrections.")]),
+    ("connecting-customer-data", "One customer view does not require replacing every system. It requires a clear plan for identity, integration and use.",
+     [("Start from the questions", "Pick the three things your teams most need to know about a customer."),
+      ("Unify identity first", "Match records reliably before you try to analyze anything."),
+      ("Integrate in layers", "Connect systems gradually instead of attempting a big-bang rebuild."),
+      ("Put insight where people work", "A dashboard nobody opens helps no one. Surface it inside the agent's screen."),
+      ("Govern consent", "Respect preferences and regulations from the start.")]),
+    ("erp-demo-truth", "A polished vendor demo shows what the product does best. A scripted demo shows whether it fits you.",
+     [("Script from your real processes", "Give every vendor the same scenarios drawn from your daily work."),
+      ("Score on one sheet", "Use identical criteria so comparisons are fair and defensible."),
+      ("Involve end users", "The people who will use the system spot gaps that executives miss."),
+      ("Ask to see the edge cases", "Exceptions and failures reveal more than the happy path."),
+      ("Insist on hands-on time", "A sandbox session beats any slide.")]),
+    ("itsm-migration", "Moving off a legacy service management tool is a chance to simplify. It is also easy to disrupt service if you rush.",
+     [("Inventory what you really use", "Retire unused workflows rather than copying them across."),
+      ("Clean data before moving it", "Migrating bad records only moves the problem."),
+      ("Migrate in waves", "Start with low-risk queues and learn before the critical ones."),
+      ("Run in parallel where it matters", "Keep a safety net for urgent services during cutover."),
+      ("Retrain with real tickets", "People learn fastest on the work they actually do.")]),
+    ("pilot-to-production", "Plenty of AI demos work. Far fewer become dependable systems. The gap usually comes down to four things.",
+     [("Data access", "Production needs reliable, permissioned data, not a one-off extract."),
+      ("Integration", "Value appears only when AI is wired into the workflow people use."),
+      ("Ownership", "Someone must be accountable for the outcome after launch."),
+      ("Monitoring", "Models drift. You need to watch quality and cost continuously.")]),
+    ("cx-beyond-nps", "Net Promoter Score is useful but incomplete. Better signals show where loyalty is won or lost.",
+     [("Customer effort", "How hard was it to get help? Effort predicts loyalty well."),
+      ("Resolution and repeat contact", "Did the issue stay fixed, or did the customer have to come back?"),
+      ("Behavioral signals", "Usage patterns and drop-offs often speak louder than surveys."),
+      ("Closing the loop", "Follow up on feedback so customers see that it matters."),
+      ("Link to revenue", "Tie experience measures to retention and growth so they get funded.")]),
+]
+
 
 def build_blog():
     stage = resources_stage('blog.html')
     b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Blogs & Newsletter', 'Latest <span class="r">thinking.</span>',
              "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage)
     f = POSTS[0]
-    feat = f'<a class="feature rv" href="#"><div class="art ph">{photo(f[4])}</div><div class="fb2"><span class="kicker">{f[1]} · Featured</span><h3>{f[2]}</h3><p>{f[3]} Read it before you invest in a single model.</p><span class="more" style="margin-top:24px">Read article {ARROW}</span></div></a>'
-    cards = ''.join(f'<a class="post" href="#" data-cat="{c}"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for c, t, ti, de, ph, rt in POSTS[1:])
+    feat = f'<a class="feature rv" href="{ARTICLES[0][0]}.html"><div class="art ph">{photo(f[4])}</div><div class="fb2"><span class="kicker">{f[1]} · Featured</span><h3>{f[2]}</h3><p>{f[3]} Read it before you invest in a single model.</p><span class="more" style="margin-top:24px">Read article {ARROW}</span></div></a>'
+    cards = ''.join(f'<a class="post" href="{ARTICLES[i+1][0]}.html" data-cat="{c}"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for i, (c, t, ti, de, ph, rt) in enumerate(POSTS[1:]))
     b += f'''<section id="more"><div class="wrap">{sh("Blogs", "Insights from the field.", "Filter by topic to find what is useful to you.")}{feat}
 <div id="postlist"><div class="chipbar" data-filter="#postlist"><button class="fbtn on" data-f="all">All</button><button class="fbtn" data-f="ai">AI</button><button class="fbtn" data-f="erp">ERP</button><button class="fbtn" data-f="itsm">ITSM</button><button class="fbtn" data-f="cx">CX</button></div>
 <div class="posts" data-stagger>{cards}</div></div></div></section>'''
     b += f'''<section class="navy" style="padding:90px 0" id="newsletter"><div class="wrap split2"><div><span class="kicker rv">Newsletter</span><h2 data-split>One useful email, once a month.</h2></div>
 <div class="rv" data-delay=".2"><p style="font-size:1.1rem;margin-bottom:26px;max-width:44ch">Short briefings on what is changing in enterprise technology, and what to do about it.</p><form data-demo onsubmit="return false"><div class="news"><input type="email" required placeholder="you@company.com" aria-label="Email"><button class="btn btn-red" type="submit">Subscribe</button></div></form><div class="ok" style="margin-top:16px">Thanks, you are on the list.</div></div></div></section>'''
     page("blog.html", "Blogs & Newsletter — Arron", "Arron insights on AI, ERP, ITSM and customer experience, plus our monthly newsletter.", b)
+
+
+def build_articles():
+    for i, (slug, intro, pts) in enumerate(ARTICLES):
+        c, tag, title, desc, ph, rt = POSTS[i]
+        stage = photo_stage(ph, title, f"{tag} · {rt}")
+        b = hero(f'<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / <a href="blog.html">Blogs</a> / {tag}', title, desc, stage, "photo", cta=False)
+        b += f'''<section id="more"><div class="wrap" style="max-width:920px"><span class="kicker">{tag} · {rt}</span><p class="lead" style="font-size:1.3rem;color:var(--ink);font-weight:500;margin-bottom:46px">{intro}</p>
+<h2 style="font-size:1.8rem;margin-bottom:8px">Key takeaways</h2>{rows([(a, b2) for a, b2 in pts], "c2")}
+<div style="margin-top:56px;padding:34px 38px;border-radius:20px;background:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap"><div><b style="font:800 1.2rem var(--fd);color:var(--ink);display:block">Want to talk this through?</b><span style="color:var(--muted)">A senior consultant can help you apply this to your situation.</span></div><a class="btn btn-red" href="about.html#contact">Talk to an expert {ARROW}</a></div></div></section>'''
+        others = [j for j in range(len(POSTS)) if j != i][:3]
+        b += '<section class="paper"><div class="wrap">' + sh("Keep reading", "More from the blog.", "Related articles on AI, ERP, ITSM and CX.") + '<div class="posts" data-stagger>' + ''.join(
+            f'<a class="post" href="{ARTICLES[j][0]}.html"><div class="art ph">{photo(POSTS[j][4])}</div><div class="pb"><span class="m">{POSTS[j][1]} · {POSTS[j][5]}</span><h3>{POSTS[j][2]}</h3><p>{POSTS[j][3]}</p><span class="more">Read article {ARROW}</span></div></a>' for j in others) + '</div></div></section>'
+        page(f"{slug}.html", f"{title} — Arron", desc, b)
 
 
 def build_events():
@@ -577,7 +646,7 @@ def build_events():
          '<div class="evcards" data-stagger>' + ''.join(f'<div class="evc"><div class="art ph">{photo(ph)}<div class="pill-d"><b>{d}</b><span>{m}</span></div></div><div class="eb"><span class="k">{k}</span><h3>{t}</h3><p>{p}</p><a class="more" href="about.html#contact">Register {ARROW}</a></div></div>' for d, m, t, p, k, ph in up) + '</div></div></section>'
     od = [("Choosing an ERP without regret", "On demand · 38 min", "meeting-table"), ("Building a business case for ITSM", "On demand · 42 min", "boardroom"), ("Customer journeys that convert", "On demand · 35 min", "sticky-notes")]
     b += '<section class="paper"><div class="wrap">' + sh("On demand", "Watch when it suits you.", "Recordings of past webinars, free to watch.") + \
-         '<div class="evcards" data-stagger>' + ''.join(f'<div class="evc"><div class="art ph">{photo(ph)}</div><div class="eb"><span class="k">Webinar recording</span><h3>{t}</h3><p>{d}</p><a class="more" href="#">Watch now {ARROW}</a></div></div>' for t, d, ph in od) + '</div></div></section>'
+         '<div class="evcards" data-stagger>' + ''.join(f'<div class="evc"><div class="art ph">{photo(ph)}</div><div class="eb"><span class="k">Webinar recording</span><h3>{t}</h3><p>{d}</p><a class="more" href="about.html#contact">Request recording {ARROW}</a></div></div>' for t, d, ph in od) + '</div></div></section>'
     b += cta_band("Want us at your event?", "Our consultants speak on AI, ERP, ITSM and customer experience.", "Invite a speaker")
     page("events.html", "Events & Webinars — Arron", "Upcoming and on-demand Arron webinars and events.", b)
 
@@ -611,7 +680,7 @@ def build_resources():
     b += '<section id="more"><div class="wrap">' + sh("Explore", "Three ways to engage.", "Read, learn or join us.") + '<div class="tiles" style="grid-template-columns:repeat(3,1fr)" data-stagger>' + ''.join(
         f'<a class="tile" href="{h}"><div class="art ph">{photo(ph)}</div><div class="tb"><span class="k">{k}</span><h3>{t}</h3><p>{d}</p><span class="more">Explore {ARROW}</span></div></a>' for h, k, t, d, ph in tl) + '</div></div></section>'
     b += '<section class="paper"><div class="wrap">' + sh("Latest", "Fresh from the blog.", "Three recent reads.") + '<div class="posts" data-stagger>' + ''.join(
-        f'<a class="post" href="blog.html"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for c, t, ti, de, ph, rt in POSTS[1:4]) + '</div></div></section>'
+        f'<a class="post" href="{ARTICLES[i+1][0]}.html"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for i, (c, t, ti, de, ph, rt) in enumerate(POSTS[1:4])) + '</div></div></section>'
     b += cta_band("Get the monthly briefing.", "One useful email, once a month.", "Subscribe", "blog.html#newsletter")
     page("resources.html", "Resources — Arron | Insights, Events & Careers", "Arron insights, newsletter, webinars and career opportunities.", b)
 
@@ -641,7 +710,7 @@ def build_about():
 
 if __name__ == "__main__":
     build_home(); build_offerings(); build_cap(); build_industry(); build_cases(); build_testimonials(); build_consultants()
-    build_resources(); build_blog(); build_events(); build_careers(); build_about()
+    build_resources(); build_blog(); build_articles(); build_events(); build_careers(); build_about()
     for k in OFFER_KEYS + CAP_KEYS:
         build_detail(k)
     print("built", len([f for f in os.listdir(ROOT) if f.endswith('.html')]), "pages")
