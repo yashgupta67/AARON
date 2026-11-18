@@ -173,6 +173,19 @@ def tile(href, k, title, desc, art_html):
     return f'<a class="tile" href="{href}"><div class="art">{art_html}</div><div class="tb"><span class="k">{k}</span><h3>{title}</h3><p>{desc}</p><span class="more">Explore {ARROW}</span></div></a>'
 
 
+
+def resources_stage(active=None):
+    items = [("blog.html", "article", "#2563d8", "Blogs & Newsletter", "Insights on AI, ERP, ITSM and CX, plus a monthly briefing", "8 articles"),
+             ("events.html", "webinar", "#d4202f", "Events & Webinars", "Live sessions, roundtables and on-demand recordings", "6 sessions"),
+             ("careers.html", "career", "#1a9a5b", "Careers", "Open roles and how we hire", "6 open roles")]
+    out = ''
+    for href, ic, c, t, d, n in items:
+        cur = " current" if href == active else ""
+        out += f'''<a class="rlink{cur}" href="{href}"><span class="ri" style="background:{c}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{V.ICON_PATHS[ic]}</svg></span>
+<span class="rt"><b>{t}</b><span>{d}</span></span><span class="rn">{n}</span><span class="rg">{ARROW}</span></a>'''
+    return f'<div class="rstack">{out}</div>'
+
+
 # =========================================================== DETAIL PAGES (offerings + capabilities)
 D = {}
 D["ai"] = dict(
@@ -540,7 +553,7 @@ POSTS = [
 
 
 def build_blog():
-    stage = V.v_resources()
+    stage = resources_stage('blog.html')
     b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Blogs & Newsletter', 'Latest <span class="r">thinking.</span>',
              "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage)
     f = POSTS[0]
@@ -590,7 +603,7 @@ def build_careers():
 
 def build_resources():
     b = hero('<a href="index.html">Home</a> / Resources', 'Ideas worth <span class="r">acting on.</span>',
-             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", V.v_resources())
+             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", resources_stage())
     tl = [("blog.html", "Blogs & Newsletter", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX, plus a monthly newsletter.", "laptop-dark"),
           ("events.html", "Events & Webinars", "Learn with us, live", "Upcoming sessions and on-demand recordings.", "workshop"),
           ("careers.html", "Careers", "Build your career with Arron", "Open roles and how we hire.", "team-laptop")]
