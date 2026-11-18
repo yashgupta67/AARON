@@ -226,12 +226,49 @@ def v_industries():
     return f'<svg viewBox="0 0 560 290" {FONT}>{out}</svg>'
 
 
+def _ico(path, x, y, size=26):
+    sc = size / 24
+    return f'<g transform="translate({x} {y}) scale({sc})" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{path}</g>'
+
+
+ICON_PATHS = {
+    "article": '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h6"/>',
+    "webinar": '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M10.5 8.5l4 2-4 2z"/>',
+    "career": '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 13h18"/>',
+}
+
+
 def v_resources():
-    cards = [("ARTICLE", "Is your enterprise ready for AI?", 30, 26, "#6aa3ff"), ("WEBINAR", "ERP selection, step by step", 70, 120, "#ff6b78"), ("CAREERS", "Build the next chapter with us", 110, 214, "#4ade80")]
+    rows = [("ARTICLE", "Is your enterprise ready for AI?", "#2563d8", "article"),
+            ("WEBINAR", "ERP selection, step by step", "#d4202f", "webinar"),
+            ("CAREERS", "Build the next chapter with us", "#1a9a5b", "career")]
     out = ''
-    for t, s, x, y, c in cards:
-        out += f'<g style="animation:float 6s ease-in-out infinite;animation-delay:{x/100}s"><rect x="{x}" y="{y}" width="400" height="84" rx="16" {GLASS}/><rect x="{x+18}" y="{y+18}" width="48" height="48" rx="12" fill="{c}" opacity=".85"/><text x="{x+86}" y="{y+36}" fill="{c}" font-size="11" font-weight="800" letter-spacing="2">{t}</text><text x="{x+86}" y="{y+60}" fill="#fff" font-size="16" font-weight="800">{s}</text></g>'
-    return f'<svg viewBox="0 0 560 320" {FONT}>{out}</svg>'
+    for i, (t, s2, c, ic) in enumerate(rows):
+        y = 24 + i * 100
+        out += f'''<g><rect x="20" y="{y}" width="520" height="84" rx="16" {GLASS}/>
+<rect x="38" y="{y+14}" width="56" height="56" rx="14" fill="{c}"/>{_ico(ICON_PATHS[ic], 38+15, y+14+15, 26)}
+<text x="116" y="{y+37}" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="2.2">{t}</text>
+<text x="116" y="{y+62}" fill="#fff" font-size="17" font-weight="800">{s2}</text>
+<path d="M500 {y+42}h14m-6-6l6 6-6 6" fill="none" stroke="#9fb3e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>'''
+    return f'<svg viewBox="0 0 560 330" {FONT}>{out}</svg>'
+
+
+def v_impact():
+    cards = [("Close cycle", "-32%", "#6aa3ff", 16), ("Ticket handling", "-40%", "#ff6b78", 82), ("NPS", "+18", "#4ade80", 148)]
+    out = ''
+    for t, v, c, _ in cards:
+        pass
+    for i, (t, v, c, _) in enumerate(cards):
+        x = 20 + i * 178
+        pts = " ".join(f"{x+16+j*22},{110-(j*5+(i*7)%9)}" for j in range(6))
+        out += f'''<g><rect x="{x}" y="24" width="166" height="130" rx="16" {GLASS}/>
+<text x="{x+16}" y="52" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="1.6">{t.upper()}</text>
+<text x="{x+16}" y="94" fill="#fff" font-size="32" font-weight="800">{v}</text>
+<polyline points="{pts}" fill="none" stroke="{c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 22)"/></g>'''
+    bars = ''.join(f'<rect x="{34+i*40}" y="{300-h}" width="26" height="{h}" rx="6" fill="{"#ff6b78" if i==6 else "#6aa3ff"}" opacity="{.35+i*.09:.2f}"/>' for i, h in enumerate([22, 36, 30, 52, 64, 78, 92]))
+    return f'''<svg viewBox="0 0 560 330" {FONT}>{out}<rect x="20" y="176" width="520" height="140" rx="16" {GLASS}/>
+<text x="38" y="204" fill="#fff" font-size="14" font-weight="800">Program value delivered over time</text>{bars}
+<path d="M34 236C140 232 220 210 330 196S470 186 520 180" fill="none" stroke="rgba(255,255,255,.35)" stroke-dasharray="4 6"/></svg>'''
 
 
 def v_map():

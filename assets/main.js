@@ -50,6 +50,13 @@ document.querySelectorAll('.rv,.split,[data-count]').forEach(function(el){io.obs
 // safety: never leave content hidden
 setTimeout(function(){document.querySelectorAll('.rv:not(.in),.split:not(.in)').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<innerHeight*1.2)el.classList.add('in')})},2500);
 
+document.querySelectorAll('[data-filter]').forEach(function(g){
+  var btns=g.querySelectorAll('.fbtn'),items=document.querySelectorAll(g.dataset.filter+' [data-cat]');
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    btns.forEach(function(x){x.classList.toggle('on',x===b)});
+    items.forEach(function(it){var ok=b.dataset.f==='all'||it.dataset.cat.split(' ').indexOf(b.dataset.f)>-1;it.classList.toggle('hide',!ok)});
+  })});
+});
 document.querySelectorAll('form[data-demo]').forEach(function(f){f.addEventListener('submit',function(e){
   e.preventDefault();var ok=f.parentNode.querySelector('.ok')||f.querySelector('.ok');if(ok)ok.style.display='block';f.reset();
 })});
