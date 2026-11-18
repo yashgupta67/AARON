@@ -5,10 +5,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import visuals as V
 
+VER = str(int(__import__('time').time()))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
-CHEV = '<svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>'
-LI = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.6-1 1.9-2 3.9-2 4 0 4.7 2.6 4.7 6V21h-4v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></svg>'
+ARROW = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+CHEV = '<svg width="10" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>'
+LI = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.6-1 1.9-2 3.9-2 4 0 4.7 2.6 4.7 6V21h-4v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></svg>'
 
 ICONS = {
     "bank": '<path d="M3 21h18M5 21V10M10 21V10M14 21V10M19 21V10M2 10l10-6 10 6"/>',
@@ -34,7 +35,7 @@ ICONS = {
 
 
 def icon(k):
-    return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{ICONS[k]}</svg>'
+    return f'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{ICONS[k]}</svg>'
 
 
 def photo(name, alt=""):
@@ -132,11 +133,11 @@ def page(fname, title, desc, body):
 <link rel="icon" href="assets/img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css"></head>
+<link rel="stylesheet" href="assets/styles.css?v={VER}"></head>
 <body>{header(fname)}
 {body}
 {footer()}
-<script src="assets/main.js"></script></body></html>'''
+<script src="assets/main.js?v={VER}"></script></body></html>'''
     with open(os.path.join(ROOT, fname), "w") as f:
         f.write(html)
 
@@ -181,7 +182,7 @@ def resources_stage(active=None):
     out = ''
     for href, ic, c, t, d, n in items:
         cur = " current" if href == active else ""
-        out += f'''<a class="rlink{cur}" href="{href}"><span class="ri" style="background:{c}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{V.ICON_PATHS[ic]}</svg></span>
+        out += f'''<a class="rlink{cur}" href="{href}"><span class="ri" style="background:{c}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{V.ICON_PATHS[ic]}</svg></span>
 <span class="rt"><b>{t}</b><span>{d}</span></span><span class="rn">{n}</span><span class="rg">{ARROW}</span></a>'''
     return f'<div class="rstack">{out}</div>'
 
@@ -553,7 +554,7 @@ POSTS = [
 
 
 def build_blog():
-    stage = V.v_resources()
+    stage = resources_stage('blog.html')
     b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Blogs & Newsletter', 'Latest <span class="r">thinking.</span>',
              "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage)
     f = POSTS[0]
@@ -603,7 +604,7 @@ def build_careers():
 
 def build_resources():
     b = hero('<a href="index.html">Home</a> / Resources', 'Ideas worth <span class="r">acting on.</span>',
-             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", V.v_resources())
+             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", resources_stage())
     tl = [("blog.html", "Blogs & Newsletter", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX, plus a monthly newsletter.", "laptop-dark"),
           ("events.html", "Events & Webinars", "Learn with us, live", "Upcoming sessions and on-demand recordings.", "workshop"),
           ("careers.html", "Careers", "Build your career with Arron", "Open roles and how we hire.", "team-laptop")]
