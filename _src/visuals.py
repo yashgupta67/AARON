@@ -239,17 +239,17 @@ ICON_PATHS = {
 
 
 def v_resources():
-    rows = [("ARTICLE", "Is your enterprise ready for AI?", "#2563d8", "article"),
-            ("WEBINAR", "ERP selection, step by step", "#d4202f", "webinar"),
-            ("CAREERS", "Build the next chapter with us", "#1a9a5b", "career")]
+    rows = [("blog.html", "BLOGS & NEWSLETTER", "Is your enterprise ready for AI?", "#2563d8", "article"),
+            ("events.html", "EVENTS & WEBINARS", "ERP selection, step by step", "#d4202f", "webinar"),
+            ("careers.html", "CAREERS", "Build the next chapter with us", "#1a9a5b", "career")]
     out = ''
-    for i, (t, s2, c, ic) in enumerate(rows):
+    for i, (href, t, s2, c, ic) in enumerate(rows):
         y = 24 + i * 100
-        out += f'''<g><rect x="20" y="{y}" width="520" height="84" rx="16" {GLASS}/>
+        out += f'''<a href="{href}" class="rrow"><rect class="rowbg" x="20" y="{y}" width="520" height="84" rx="16" {GLASS}/>
 <rect x="38" y="{y+14}" width="56" height="56" rx="14" fill="{c}"/>{_ico(ICON_PATHS[ic], 38+15, y+14+15, 26)}
 <text x="116" y="{y+37}" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="2.2">{t}</text>
 <text x="116" y="{y+62}" fill="#fff" font-size="17" font-weight="800">{s2}</text>
-<path d="M500 {y+42}h14m-6-6l6 6-6 6" fill="none" stroke="#9fb3e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>'''
+<path d="M500 {y+42}h14m-6-6l6 6-6 6" fill="none" stroke="#9fb3e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></a>'''
     return f'<svg viewBox="0 0 560 330" {FONT}>{out}</svg>'
 
 

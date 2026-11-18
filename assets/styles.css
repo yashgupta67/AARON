@@ -509,3 +509,5 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
 .rlink .rg{width:22px;color:#fff;transition:transform .3s}
 .rlink:hover .rg{transform:translateX(5px)}
 @media(max-width:640px){.rlink{grid-template-columns:48px 1fr 20px;padding:16px}.rlink .ri{width:48px;height:48px;border-radius:13px}.rlink .rn{display:none}.rlink:hover{transform:none}}
+
+.stage svg a.rrow{cursor:pointer}.stage svg a.rrow .rowbg{transition:fill .25s,stroke .25s}.stage svg a.rrow:hover .rowbg{fill:rgba(255,255,255,.16);stroke:rgba(255,255,255,.5)}

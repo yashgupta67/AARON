@@ -553,7 +553,7 @@ POSTS = [
 
 
 def build_blog():
-    stage = resources_stage('blog.html')
+    stage = V.v_resources()
     b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Blogs & Newsletter', 'Latest <span class="r">thinking.</span>',
              "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage)
     f = POSTS[0]
@@ -603,7 +603,7 @@ def build_careers():
 
 def build_resources():
     b = hero('<a href="index.html">Home</a> / Resources', 'Ideas worth <span class="r">acting on.</span>',
-             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", resources_stage())
+             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", V.v_resources())
     tl = [("blog.html", "Blogs & Newsletter", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX, plus a monthly newsletter.", "laptop-dark"),
           ("events.html", "Events & Webinars", "Learn with us, live", "Upcoming sessions and on-demand recordings.", "workshop"),
           ("careers.html", "Careers", "Build your career with Arron", "Open roles and how we hire.", "team-laptop")]
