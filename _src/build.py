@@ -115,7 +115,7 @@ def footer():
     def col(title, links):
         return f'<div><h4>{title}</h4><ul>' + ''.join(f'<li><a href="{h}">{t}</a></li>' for h, t in links) + '</ul></div>'
     return f'''<footer class="site-footer"><div class="wrap"><div class="ft" style="grid-template-columns:1.5fr repeat(4,1fr)">
-<div><img src="assets/img/logo-light.png" alt="Arron"><p style="max-width:34ch">Enterprise technology consulting for AI, ERP, ITSM and customer experience. Based in Dallas, Texas.</p></div>
+<div><img src="assets/img/logo-stacked-light.png" alt="Arron — ahead of now"><p style="max-width:34ch">Enterprise technology consulting for AI, ERP, ITSM and customer experience. Based in Dallas, Texas.</p></div>
 {col("Offerings", [("ai.html", "AI / Super Intelligence"), ("erp.html", "ERP"), ("itsm.html", "ITSM"), ("cx.html", "Customer Experience")])}
 {col("Capabilities", [("consulting.html", "Consulting"), ("services.html", "Services"), ("partnerships.html", "Partnerships"), ("product.html", "Product as a Service")])}
 {col("Explore", [("case-studies.html", "Case Studies"), ("testimonials.html", "Testimonials"), ("consultants.html", "Consultants"), ("blog.html", "Blog"), ("events.html", "Events"), ("careers.html", "Careers")])}

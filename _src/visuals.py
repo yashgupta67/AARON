@@ -192,7 +192,7 @@ def v_partners():
         out += f'<path d="M{cx},{cy} L{x:.0f},{y:.0f}" stroke="url(#gp)" stroke-width="1.8" class="sv-flow" style="animation-delay:{i*.3}s"/>'
         out += f'<rect x="{x-56:.0f}" y="{y-22:.0f}" width="112" height="44" rx="12" {GLASS}/><text x="{x:.0f}" y="{y+5:.0f}" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">{n}</text>'
     return f'''<svg viewBox="0 0 560 360" {FONT}><defs><linearGradient id="gp" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>{out}
-<circle cx="{cx}" cy="{cy}" r="44" fill="#fff"/><image href="assets/img/mark.png" x="{cx-30}" y="{cy-22}" width="60" height="42"/></svg>'''
+<circle cx="{cx}" cy="{cy}" r="44" fill="#fff"/><image href="assets/img/mark.png" x="{cx-27}" y="{cy-27}" width="54" height="54"/></svg>'''
 
 
 def v_product():

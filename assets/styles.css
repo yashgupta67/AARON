@@ -26,7 +26,7 @@ section{padding:110px 0;position:relative}
 .site-header{position:fixed;inset:0 0 auto 0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
 .site-header.scrolled{box-shadow:0 8px 30px -14px rgba(6,26,66,.25)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:84px}
-.logo img{height:62px;width:auto}
+.logo img{height:58px;width:auto}
 .nav{display:flex;align-items:center;gap:2px}
 .nav>a,.nav .dd>a{font:600 .93rem var(--fd);color:var(--ink);padding:10px 15px;border-radius:8px;position:relative;display:flex;align-items:center;gap:6px;transition:color .2s}
 .nav>a::after,.nav .dd>a::after{content:"";position:absolute;left:15px;right:15px;bottom:3px;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s}
@@ -312,7 +312,7 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
 /* ---------- footer ---------- */
 .site-footer{background:var(--navy-950);color:#8ea3d3;padding:90px 0 36px;font-size:.95rem}
 .ft{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:50px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.12)}
-.ft img{height:64px;width:auto;margin-bottom:22px}
+.ft img{height:124px;width:auto;margin-bottom:22px}
 .site-footer h4{color:#fff;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px}
 .site-footer ul{display:grid;gap:12px}.site-footer a:hover{color:#fff}
 .fb{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:30px;font-size:.85rem}
@@ -322,7 +322,7 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
 .orbit{position:relative;aspect-ratio:1;width:100%;max-width:580px;margin-inline:auto}
 .orbit>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .ocore{position:absolute;left:50%;top:50%;width:176px;height:176px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 25%,#fff,#e6eefc);display:grid;place-items:center;box-shadow:0 0 0 14px rgba(255,255,255,.07),0 0 90px 14px rgba(37,99,216,.55)}
-.ocore img{width:112px}
+.ocore img{width:104px}
 .onode{position:absolute;transform:translate(-50%,-50%);min-width:132px;padding:14px 20px;border-radius:16px;background:rgba(10,36,87,.7);border:1px solid var(--glass-b);backdrop-filter:blur(12px);color:#fff;font:800 1rem var(--fd);text-align:center;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);transition:.3s}
 .onode small{display:block;font:500 .72rem var(--fb);color:#9fb3e0;margin-top:3px}
 .onode:hover{background:rgba(255,255,255,.18);transform:translate(-50%,-55%)}
@@ -350,7 +350,7 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
   .cta{padding:56px 40px}.quotes{grid-template-columns:1fr}
   .spec>div:nth-child(3){grid-column:span 2;border-left:0;border-top:1px solid var(--line)}
 }
-@media(max-width:900px){
+@media(max-width:1100px){
   .site-header{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}
   .burger{display:block}
   .nav{position:fixed;inset:84px 0 0 0;background:#fff;flex-direction:column;align-items:stretch;padding:20px 24px 40px;gap:0;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);overflow:auto}
@@ -484,7 +484,7 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
   .qgrid,.evcards{grid-template-columns:1fr 1fr}
   .collage{min-height:460px}
 }
-@media(max-width:900px){
+@media(max-width:1100px){
   .menu.wide{width:auto;display:block}.menu h5{padding:14px 4px 4px}.menu .foot{display:none}
   .nav .dd:nth-last-child(-n+3) .menu,.nav .dd:nth-last-child(-n+3) .menu.wide{right:auto}
 }
@@ -522,3 +522,5 @@ section[id],div[id]{scroll-margin-top:100px}
 .hero-signup .hs-note a{color:#fff;text-decoration:underline;text-underline-offset:3px}
 .hero-signup .ok{margin-top:12px;background:rgba(74,222,128,.14);color:#b7f5cf}
 @media(max-width:640px){.hero-signup{padding:18px}.hero-signup .news .btn{justify-content:center}}
+
+.nav>a,.nav .dd>a{white-space:nowrap}
